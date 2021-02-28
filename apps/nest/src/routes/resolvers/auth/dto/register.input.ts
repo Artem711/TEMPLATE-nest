@@ -1,20 +1,9 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator'
-import { InputType, Field } from '@nestjs/graphql'
+import { InputType, PickType } from '@nestjs/graphql'
+import { UserModel } from '@server/routes/models'
 
 @InputType()
-export class RegisterInput {
-  @Field()
-  @IsEmail()
-  email: string
-
-  @Field()
-  @IsNotEmpty()
-  @MinLength(8)
-  password: string
-
-  @Field({ nullable: true })
-  firstname?: string
-
-  @Field({ nullable: true })
-  lastname?: string
-}
+export class RegisterInput extends PickType(
+  UserModel,
+  ['firstName', 'lastName', 'password', 'email'],
+  InputType
+) {}

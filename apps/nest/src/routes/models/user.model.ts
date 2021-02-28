@@ -1,5 +1,6 @@
 // # PLUGINS IMPORTS //
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
+import { IsEmail, IsNotEmpty, MinLength } from 'class-validator'
 import { UserRole } from '@prisma/client'
 
 // # EXTRA IMPORTS //
@@ -12,10 +13,13 @@ registerEnumType(UserRole, { name: 'UserRole' })
 
 @ObjectType()
 export class UserModel extends BaseModel {
-  @Field(() => String)
+  @Field()
+  @IsEmail()
   email: string
 
-  @Field(() => String)
+  @Field()
+  @IsNotEmpty()
+  @MinLength(8)
   password: string
 
   @Field(() => String)

@@ -10,7 +10,6 @@ import { AppService } from '@server/routes/services'
 import { PostModule } from '@server/routes/resolvers/post/post.module'
 import { UserModule } from '@server/routes/resolvers/user/user.module'
 import { AuthModule } from '@server/routes/resolvers/auth/auth.module'
-import { AppResolver } from '@server/routes/resolvers/app/app.resolver'
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -23,6 +22,6 @@ import { AppResolver } from '@server/routes/resolvers/app/app.resolver'
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppResolver],
+  providers: [AppService],
 })
 export class AppModule {}

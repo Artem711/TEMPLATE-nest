@@ -35,7 +35,7 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async createUser(payload: RegisterInput): Promise<TokenModel> {
+  async register(payload: RegisterInput): Promise<TokenModel> {
     const hashedPassword = await this.passwordService.hashPassword(
       payload.password
     )
