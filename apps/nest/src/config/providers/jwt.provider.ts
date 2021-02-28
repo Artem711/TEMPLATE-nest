@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
+
 import { SecurityConfig } from '../constants/config.types'
 
 export const JWTProvider = JwtModule.registerAsync({

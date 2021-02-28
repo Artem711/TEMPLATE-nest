@@ -1,9 +1,9 @@
 // # PLUGINS IMPORTS //
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { User } from '@prisma/client'
-import { Strategy, ExtractJwt } from 'passport-jwt'
 import { PassportStrategy } from '@nestjs/passport'
 import { ConfigService } from '@nestjs/config'
+import { Strategy, ExtractJwt } from 'passport-jwt'
 
 // # EXTRA IMPORTS //
 import { AuthService } from '@server/routes/services'

@@ -35,7 +35,7 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async register(payload: RegisterInput): Promise<TokenModel> {
+  async registerUser(payload: RegisterInput): Promise<TokenModel> {
     const hashedPassword = await this.passwordService.hashPassword(
       payload.password
     )
@@ -64,7 +64,7 @@ export class AuthService {
     }
   }
 
-  async login(email: string, password: string): Promise<TokenModel> {
+  async loginUser(email: string, password: string): Promise<TokenModel> {
     const user = await this.prisma.user.findUnique({ where: { email } })
 
     if (!user) {
@@ -81,6 +81,11 @@ export class AuthService {
     }
 
     return this._generateToken({ userId: user.id })
+  }
+
+  async deleteUser(id: string): Promise<UserModel> {
+    const user = await this.prisma.user.delete({ where: { id } })
+    return user
   }
 
   _validateUser(userId: string): Promise<UserModel> {
@@ -103,6 +108,7 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
+      id: payload.userId,
     }
   }
 

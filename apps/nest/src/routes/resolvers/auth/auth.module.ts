@@ -12,16 +12,21 @@ import { JwtStrategy } from './utils/jwt-strategy'
 
 /////////////////////////////////////////////////////////////////////////////
 
-@Module({
-  imports: [Providers.PassportProvider, Providers.JWTProvider],
-  providers: [
-    AuthService,
-    AuthResolver,
-    JwtStrategy,
-    GqlAuthGuard,
-    PasswordService,
-    PrismaService,
-  ],
-  exports: [GqlAuthGuard],
-})
+const AuthModuleImports = [Providers.PassportProvider, Providers.JWTProvider]
+const AuthModuleProviders = [
+  AuthService,
+  AuthResolver,
+  JwtStrategy,
+  GqlAuthGuard,
+  PasswordService,
+  PrismaService,
+]
+const AuthModuleExports = [GqlAuthGuard]
+
+export const AuthModuleConfig = {
+  imports: AuthModuleImports,
+  providers: AuthModuleProviders,
+  exports: AuthModuleExports,
+}
+@Module(AuthModuleConfig)
 export class AuthModule {}

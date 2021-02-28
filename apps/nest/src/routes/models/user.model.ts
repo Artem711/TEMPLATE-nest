@@ -23,9 +23,11 @@ export class UserModel extends BaseModel {
   password: string
 
   @Field(() => String)
+  @IsNotEmpty()
   firstName: string
 
   @Field(() => String)
+  @IsNotEmpty()
   lastName: string
 
   @Field(() => [PostModel], { nullable: 'items' })

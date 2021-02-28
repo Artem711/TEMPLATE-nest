@@ -4,6 +4,6 @@ import { UserModel } from '@server/routes/models'
 @InputType()
 export class RegisterInput extends PickType(
   UserModel,
-  ['firstName', 'lastName', 'password', 'email'],
+  ['firstName', 'lastName', 'password', 'email'] as const,
   InputType
 ) {}
