@@ -7,7 +7,10 @@ import { Providers } from '@server/config'
 import { AuthResolver } from './auth.resolver'
 import { AuthModuleConfig } from './auth.module'
 import { AuthService } from '@server/routes/services'
-import { RegisterInput } from './dto'
+
+import { registerUser, deleteUser } from '@server/../tests/functions'
+
+import { userDataGenerator } from '@server/../tests/constants'
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -26,15 +29,9 @@ describe('AuthResolver Test', () => {
   })
 
   describe('registerUser() and deleteUser()', () => {
-    const data = {
-      email: 'test1@gmail.com',
-      firstName: 'Artem',
-      lastName: 'Moshnin',
-      password: '12345678',
-    }
-
+    const data = userDataGenerator()
     it('should (register & delete user) succesfully', async () => {
-      const response = await registerUser(data)
+      const response = await registerUser(wrapper, data)
       expect(Object.keys(response)).toEqual(['accessToken', 'refreshToken'])
 
       const user = await service.getUserFromToken(response.accessToken)
@@ -42,20 +39,18 @@ describe('AuthResolver Test', () => {
       delete data.password
 
       expect(user).toMatchObject(data)
-      deleteUser(user.id)
+
+      const deleteResponse = await deleteUser(wrapper, user.id)
+      expect(deleteResponse).toHaveProperty(['id'])
+      expect(deleteResponse.id).toEqual(user.id)
     })
   })
 
   describe('login()', () => {
-    const data = {
-      email: 'test3@gmail.com',
-      firstName: 'Artem',
-      lastName: 'Moshnin',
-      password: '12345678',
-    }
-
     it('should (register & login & delete user) succesfully', async () => {
-      const regResponse = await registerUser(data)
+      const data = userDataGenerator()
+
+      const regResponse = await registerUser(wrapper, data)
       const loginResponse = await wrapper.loginUser(data.email, data.password)
       expect(regResponse.accessToken).toEqual(loginResponse.accessToken)
 
@@ -63,17 +58,7 @@ describe('AuthResolver Test', () => {
       const logUser = await service.getUserFromToken(loginResponse.accessToken)
       expect(regUser).toEqual(logUser)
 
-      deleteUser(logUser.id)
+      deleteUser(wrapper, logUser.id)
     })
   })
-
-  async function registerUser(data: RegisterInput) {
-    return await wrapper.registerUser(data)
-  }
-
-  async function deleteUser(id: string) {
-    const response = await wrapper.deleteUser(id)
-    expect(response).toHaveProperty(['id'])
-    expect(response.id).toEqual(id)
-  }
 })
