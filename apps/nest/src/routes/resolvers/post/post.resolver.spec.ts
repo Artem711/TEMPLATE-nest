@@ -1,14 +1,19 @@
+// # PLUGINS IMPORTS //
 import { Test, TestingModule } from '@nestjs/testing'
+
+// # EXTRA IMPORTS //
+import { PostModuleConfig } from './post.module'
 import { PostResolver } from './post.resolver'
-import { PostService } from '@server/routes/services'
+
+/////////////////////////////////////////////////////////////////////////////
 
 describe('PostResolver Test', () => {
   let wrapper: PostResolver
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      providers: [PostResolver, PostService],
-    }).compile()
+    const app: TestingModule = await Test.createTestingModule(
+      PostModuleConfig
+    ).compile()
 
     wrapper = app.get<PostResolver>(PostResolver)
   })

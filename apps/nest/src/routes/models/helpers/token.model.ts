@@ -1,8 +1,7 @@
-import { Field, ObjectType, PickType } from '@nestjs/graphql'
-import { UserModel } from '@server/routes/models/user.model'
+import { Field, ObjectType } from '@nestjs/graphql'
 
 @ObjectType()
-export class TokenModel extends PickType(UserModel, ['id'] as const) {
+export class TokenModel {
   @Field({ description: 'JWT access token' })
   accessToken: string
 

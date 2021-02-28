@@ -11,7 +11,16 @@ import { UserResolver } from './user.resolver'
 
 /////////////////////////////////////////////////////////////////////////////
 
-@Module({
-  providers: [UserResolver, UserService, PasswordService, PrismaService],
-})
+const UserModuleProviders = [
+  UserResolver,
+  UserService,
+  PasswordService,
+  PrismaService,
+]
+
+export const UserModuleConfig = {
+  providers: UserModuleProviders,
+}
+
+@Module(UserModuleConfig)
 export class UserModule {}

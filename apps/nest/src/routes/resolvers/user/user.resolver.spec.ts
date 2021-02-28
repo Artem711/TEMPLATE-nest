@@ -1,24 +1,20 @@
-import { ConfigService } from '@nestjs/config'
+// # PLUGINS IMPORTS //
 import { Test, TestingModule } from '@nestjs/testing'
-import {
-  UserService,
-  PasswordService,
-  PrismaService,
-} from '@server/routes/services'
+import { ConfigService } from '@nestjs/config'
+
+// # EXTRA IMPORTS //
+import { UserModuleConfig } from './user.module'
 import { UserResolver } from './user.resolver'
+
+/////////////////////////////////////////////////////////////////////////////
 
 describe('UserResolver Test', () => {
   let wrapper: UserResolver
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      providers: [
-        UserResolver,
-        UserService,
-        PrismaService,
-        PasswordService,
-        ConfigService,
-      ],
+      ...UserModuleConfig,
+      providers: [...UserModuleConfig.providers, ConfigService],
     }).compile()
 
     wrapper = app.get<UserResolver>(UserResolver)

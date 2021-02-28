@@ -88,13 +88,22 @@ export class AuthService {
     return user
   }
 
-  _validateUser(userId: string): Promise<UserModel> {
-    return this.prisma.user.findUnique({ where: { id: userId } })
-  }
-
-  _getUserFromToken(token: string): Promise<UserModel> {
+  getUserFromToken(token: string): Promise<UserModel> {
     const id = this.jwtService.decode(token)['userId']
     return this.prisma.user.findUnique({ where: { id } })
+  }
+
+  refreshToken(token: string): TokenModel {
+    try {
+      const { userId } = this.jwtService.verify(token)
+      return this._generateToken({ userId })
+    } catch (e) {
+      throw new UnauthorizedException()
+    }
+  }
+
+  _validateUser(userId: string): Promise<UserModel> {
+    return this.prisma.user.findUnique({ where: { id: userId } })
   }
 
   _generateToken(payload: { userId: string }): TokenModel {
@@ -108,16 +117,6 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
-      id: payload.userId,
-    }
-  }
-
-  _refreshToken(token: string): TokenModel {
-    try {
-      const { userId } = this.jwtService.verify(token)
-      return this._generateToken({ userId })
-    } catch (e) {
-      throw new UnauthorizedException()
     }
   }
 }
