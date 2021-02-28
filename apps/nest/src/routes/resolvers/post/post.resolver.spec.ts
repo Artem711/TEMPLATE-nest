@@ -14,11 +14,11 @@ describe('PostResolver Test', () => {
     await setup()
   })
 
-  describe('getPosts()', () => {
-    it('should return an instance of array', () => {
-      expect(true).toBeTruthy()
-    })
-  })
+  it('createPost()', () => {})
+
+  it('getPosts()', () => {})
+
+  it('getPostsByUser()', () => {})
 
   async function setup() {
     const app: TestingModule = await Test.createTestingModule(
