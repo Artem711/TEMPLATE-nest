@@ -8,9 +8,7 @@ export const JWTProvider = JwtModule.registerAsync({
     const securityConfig = configService.get<SecurityConfig>('security')
     return {
       secret: configService.get<string>('JWT_SECRET'),
-      signOptions: {
-        expiresIn: securityConfig.expiresIn,
-      },
+      signOptions: { expiresIn: securityConfig.expiresIn },
     }
   },
   inject: [ConfigService],

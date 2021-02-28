@@ -1,5 +1,4 @@
 export { PrismaService } from './prisma.service'
-export { AppService } from './app.service'
 export { PasswordService } from './password.service'
 
 export { AuthService } from './auth.service'
