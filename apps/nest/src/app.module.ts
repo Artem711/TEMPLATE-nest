@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common'
 
 // # EXTRA IMPORTS //
 import { Providers } from '@server/config'
+import * as Scalars from '@server/common/scalars'
 
 import { AppController } from '@server/routes/controllers'
 
@@ -16,10 +17,11 @@ import { AuthModule } from '@server/routes/resolvers/auth/auth.module'
   imports: [
     Providers.ConfigProvider,
     Providers.GraphQLProvider,
+    AuthModule,
     UserModule,
     PostModule,
-    AuthModule,
   ],
   controllers: [AppController],
+  providers: [Scalars.DateScalar],
 })
 export class AppModule {}
