@@ -22,7 +22,7 @@ export class PostResolver {
     @UserEntity() user: UserModel,
     @Args('data', { type: () => CreatePostInput }) data: CreatePostInput
   ): Promise<PostModel> {
-    console.log(user)
+    console.log(user, 'user')
     return await this.postService.createPost({ ...data, authorId: user.id })
   }
 
