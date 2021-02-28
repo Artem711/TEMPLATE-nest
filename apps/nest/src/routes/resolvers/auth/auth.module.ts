@@ -1,36 +1,19 @@
 // # PLUGINS IMPORTS //
 import { Module } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { JwtModule } from '@nestjs/jwt'
-import { PassportModule } from '@nestjs/passport'
 
 // # EXTRA IMPORTS //
+import { Providers } from '@server/config'
 import { PasswordService, PrismaService } from '@server/routes/services'
 import { AuthService } from '@server/routes/services/auth.service'
 
-import { AuthResolver } from './auth.resolver'
 import { GqlAuthGuard } from '@server/common/guards'
-import { SecurityConfig } from '@server/config/constants/config.types'
+import { AuthResolver } from './auth.resolver'
 import { JwtStrategy } from './utils/jwt-strategy'
 
 /////////////////////////////////////////////////////////////////////////////
 
 @Module({
-  imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => {
-        const securityConfig = configService.get<SecurityConfig>('security')
-        return {
-          secret: configService.get<string>('JWT_SECRET'),
-          signOptions: {
-            expiresIn: securityConfig.expiresIn,
-          },
-        }
-      },
-      inject: [ConfigService],
-    }),
-  ],
+  imports: [Providers.PassportProvider, Providers.JWTProvider],
   providers: [
     AuthService,
     AuthResolver,
