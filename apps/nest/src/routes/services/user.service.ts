@@ -8,7 +8,7 @@ import { UserModel } from '@server/routes/models'
 import {
   ChangePasswordInput,
   UpdateUserInput,
-} from '@server/routes/resolvers/user/dto'
+} from '@server/routes/resolvers/user/typings'
 
 /////////////////////////////////////////////////////////////////////////////
 

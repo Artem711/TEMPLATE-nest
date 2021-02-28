@@ -7,7 +7,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt'
 
 // # EXTRA IMPORTS //
 import { AuthService } from '@server/routes/services'
-import { JwtDto } from '../dto'
+import { JWTType } from '../typings'
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     })
   }
 
-  async validate(payload: JwtDto): Promise<User> {
+  async validate(payload: JWTType): Promise<User> {
     const user = await this.authService._validateUser(payload.userId)
     if (!user) {
       throw new UnauthorizedException()

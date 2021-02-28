@@ -17,7 +17,6 @@ describe('PostResolver Test', () => {
   describe('getPosts()', () => {
     it('should return an instance of array', () => {
       expect(true).toBeTruthy()
-      // expect(postResolver.getPostsByUser('')).resolves.toBeInstanceOf(Array)
     })
   })
 

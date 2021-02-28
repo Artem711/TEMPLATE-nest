@@ -4,7 +4,8 @@ import { Injectable } from '@nestjs/common'
 // # EXTRA IMPORTS //
 import { PrismaService } from './prisma.service'
 import { PostModel } from '@server/routes/models/post.model'
-import { CreatePostInput } from '../resolvers/post/dto/create-post.input'
+
+import { CreatePostInput } from '@server/routes/resolvers/post/typings'
 
 /////////////////////////////////////////////////////////////////////////////
 

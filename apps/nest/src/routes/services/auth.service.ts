@@ -15,7 +15,7 @@ import { PasswordService } from './password.service'
 import { PrismaService } from './prisma.service'
 import { TokenModel, UserModel } from '@server/routes/models'
 import { SecurityConfig } from '@server/config/constants/config.types'
-import { RegisterInput } from '../resolvers/auth/dto'
+import { RegisterInput } from '../resolvers/auth/typings'
 
 /////////////////////////////////////////////////////////////////////////////
 

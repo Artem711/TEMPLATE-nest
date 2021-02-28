@@ -16,7 +16,7 @@ import { PrismaService, UserService } from '@server/routes/services'
 
 import { GqlAuthGuard } from '@server/common/guards'
 import { UserEntity } from '@server/common/decorators'
-import { ChangePasswordInput, UpdateUserInput } from './dto'
+import { ChangePasswordInput, UpdateUserInput } from './typings'
 
 /////////////////////////////////////////////////////////////////////////////
 

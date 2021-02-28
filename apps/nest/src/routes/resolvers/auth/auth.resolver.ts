@@ -14,7 +14,7 @@ import {
 import { AuthService } from '@server/routes/services'
 import { TokenModel, UserModel } from '@server/routes/models'
 
-import { RegisterInput } from './dto'
+import { RegisterInput } from './typings'
 
 /////////////////////////////////////////////////////////////////////////////
 

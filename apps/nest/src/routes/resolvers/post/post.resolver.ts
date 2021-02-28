@@ -5,10 +5,11 @@ import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql'
 // # EXTRA IMPORTS //
 import { PostModel, UserModel } from '@server/routes/models'
 import { PostService } from '@server/routes/services'
-import { CreatePostInput } from './dto/create-post.input'
 
 import { GqlAuthGuard } from '@server/common/guards'
 import { UserEntity } from '@server/common/decorators'
+
+import { CreatePostInput } from './typings'
 
 /////////////////////////////////////////////////////////////////////////////
 
