@@ -8,39 +8,34 @@ import { AuthResolver } from './auth.resolver'
 import { AuthModuleConfig } from './auth.module'
 import { AuthService } from '@server/routes/services'
 
-import { registerUser, deleteUser } from '@server/../tests/functions'
-
-import { userDataGenerator } from '@server/../tests/constants'
+import { TestsFunctions, TestsConstants } from '@server/../tests'
 
 /////////////////////////////////////////////////////////////////////////////
 
 describe('AuthResolver Test', () => {
-  let wrapper: AuthResolver
-  let service: AuthService
+  let authResolver: AuthResolver
+  let authService: AuthService
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      ...AuthModuleConfig,
-      imports: [...AuthModuleConfig.imports, Providers.ConfigProvider],
-    }).compile()
-
-    wrapper = app.get<AuthResolver>(AuthResolver)
-    service = app.get<AuthService>(AuthService)
+    await setup()
   })
 
   describe('registerUser() and deleteUser()', () => {
-    const data = userDataGenerator()
+    const data = TestsConstants.userDataGenerator()
     it('should (register & delete user) succesfully', async () => {
-      const response = await registerUser(wrapper, data)
+      const response = await TestsFunctions.registerUser(authResolver, data)
       expect(Object.keys(response)).toEqual(['accessToken', 'refreshToken'])
 
-      const user = await service.getUserFromToken(response.accessToken)
+      const user = await authService.getUserFromToken(response.accessToken)
       delete user.password
       delete data.password
 
       expect(user).toMatchObject(data)
 
-      const deleteResponse = await deleteUser(wrapper, user.id)
+      const deleteResponse = await TestsFunctions.deleteUser(
+        authResolver,
+        user.id
+      )
       expect(deleteResponse).toHaveProperty(['id'])
       expect(deleteResponse.id).toEqual(user.id)
     })
@@ -48,17 +43,34 @@ describe('AuthResolver Test', () => {
 
   describe('login()', () => {
     it('should (register & login & delete user) succesfully', async () => {
-      const data = userDataGenerator()
+      const data = TestsConstants.userDataGenerator()
 
-      const regResponse = await registerUser(wrapper, data)
-      const loginResponse = await wrapper.loginUser(data.email, data.password)
+      const regResponse = await TestsFunctions.registerUser(authResolver, data)
+      const loginResponse = await authResolver.loginUser(
+        data.email,
+        data.password
+      )
       expect(regResponse.accessToken).toEqual(loginResponse.accessToken)
 
-      const regUser = await service.getUserFromToken(regResponse.accessToken)
-      const logUser = await service.getUserFromToken(loginResponse.accessToken)
+      const regUser = await authService.getUserFromToken(
+        regResponse.accessToken
+      )
+      const logUser = await authService.getUserFromToken(
+        loginResponse.accessToken
+      )
       expect(regUser).toEqual(logUser)
 
-      deleteUser(wrapper, logUser.id)
+      TestsFunctions.deleteUser(authResolver, logUser.id)
     })
   })
+
+  async function setup() {
+    const app: TestingModule = await Test.createTestingModule({
+      ...AuthModuleConfig,
+      imports: [...AuthModuleConfig.imports, Providers.ConfigProvider],
+    }).compile()
+
+    authResolver = app.get<AuthResolver>(AuthResolver)
+    authService = app.get<AuthService>(AuthService)
+  }
 })

@@ -10,44 +10,46 @@ import { Providers } from '@server/config'
 import { AuthModuleConfig } from '../auth/auth.module'
 import { AuthResolver } from '../auth/auth.resolver'
 
-import { deleteUser } from '@server/../tests/functions'
-import { userDataGenerator } from '@server/../tests/constants'
+import { TestsConstants, TestsFunctions } from '@server/../tests'
 
 /////////////////////////////////////////////////////////////////////////////
 
 describe('UserResolver Test', () => {
-  let wrapper: UserResolver
+  let userResolver: UserResolver
   let authResolver: AuthResolver
   let id = undefined
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    await setup()
+  })
+
+  describe('getUser()', () => {
+    it('should return instance of `UserModule`', async () => {
+      const response = userResolver.getUser(id)
+      expect(await response).toHaveProperty('firstName')
+      await TestsFunctions.deleteUser(authResolver, id)
+    })
+  })
+
+  async function setup() {
+    const data = TestsConstants.userDataGenerator()
+
+    // MARK: - UserResolver Setup
+    const userApp: TestingModule = await Test.createTestingModule({
       ...UserModuleConfig,
       providers: [...UserModuleConfig.providers, ConfigService],
     }).compile()
+    userResolver = userApp.get<UserResolver>(UserResolver)
 
-    wrapper = app.get<UserResolver>(UserResolver)
-
+    // MARK: - AuthResolver Setup
     const authApp: TestingModule = await Test.createTestingModule({
       ...AuthModuleConfig,
       imports: [...AuthModuleConfig.imports, Providers.ConfigProvider],
     }).compile()
 
-    const data = userDataGenerator()
-
     authResolver = authApp.get<AuthResolver>(AuthResolver)
     const authService = authApp.get<AuthService>(AuthService)
-    const res = await authService.registerUser(data)
-    id = (await authService.getUserFromToken(res.accessToken)).id
-    console.log(await authService.getUserFromToken(res.accessToken))
-  })
-
-  describe('getUser()', () => {
-    it('should return instance of `UserModule`', async () => {
-      const response = wrapper.getUser(id)
-      expect(await response).toHaveProperty('firstName')
-
-      await deleteUser(authResolver, id)
-    })
-  })
+    const response = await authService.registerUser(data)
+    id = (await authService.getUserFromToken(response.accessToken)).id
+  }
 })
