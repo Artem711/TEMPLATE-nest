@@ -32,10 +32,25 @@ describe('AuthResolver Test', () => {
     expect(response.id).toEqual(id)
   }
 
-  it('should register user succesfully', async () => {
-    const response = await registerUser()
-    expect(Object.keys(response)).toEqual(['accessToken', 'refreshToken', 'id'])
+  describe('registerUser() and deleteUser()', () => {
+    it('should (register & delete user) succesfully', async () => {
+      const response = await registerUser()
+      expect(Object.keys(response)).toEqual([
+        'accessToken',
+        'refreshToken',
+        'id',
+      ])
 
-    deleteUser(response.id)
+      deleteUser(response.id)
+    })
+  })
+
+  describe('login()', () => {
+    it('should (register & login & delete user) succesfully', async () => {
+      const registerResponse = await registerUser()
+      const loginResponse = await wrapper.loginUser(data.email, data.password)
+      expect(registerResponse.id).toEqual(loginResponse.id)
+      deleteUser(loginResponse.id)
+    })
   })
 })
