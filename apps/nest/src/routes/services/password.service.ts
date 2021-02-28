@@ -1,10 +1,10 @@
 // # PLUGINS IMPORTS //
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { ConstantsTypes } from '@server/config'
 import { compare, hash } from 'bcrypt'
 
 // # EXTRA IMPORTS //
+import { ConstantsTypes } from '@server/config'
 
 /////////////////////////////////////////////////////////////////////////////
 

@@ -2,12 +2,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
 
 // # EXTRA IMPORTS //
-import { Providers } from '@server/config'
-
+import { AuthService } from '@server/routes/services'
 import { AuthResolver } from './auth.resolver'
 import { AuthModuleConfig } from './auth.module'
-import { AuthService } from '@server/routes/services'
 
+import { Providers } from '@server/config'
 import { TestsFunctions, TestsConstants } from '@server/../tests'
 
 /////////////////////////////////////////////////////////////////////////////

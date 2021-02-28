@@ -11,9 +11,11 @@ import { JwtService } from '@nestjs/jwt'
 import { Prisma } from '@prisma/client'
 
 // # EXTRA IMPORTS //
+import { TokenModel, UserModel } from '@server/routes/models'
+
 import { PasswordService } from './password.service'
 import { PrismaService } from './prisma.service'
-import { TokenModel, UserModel } from '@server/routes/models'
+
 import { SecurityConfig } from '@server/config/constants/config.types'
 import { RegisterInput } from '../resolvers/auth/typings'
 

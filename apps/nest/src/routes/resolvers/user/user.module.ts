@@ -1,13 +1,13 @@
 // # PLUGINS IMPORTS //
 import { Module } from '@nestjs/common'
+
+// # EXTRA IMPORTS //
+import { UserResolver } from './user.resolver'
 import {
   PasswordService,
   PrismaService,
   UserService,
 } from '@server/routes/services'
-import { UserResolver } from './user.resolver'
-
-// # EXTRA IMPORTS //
 
 /////////////////////////////////////////////////////////////////////////////
 
