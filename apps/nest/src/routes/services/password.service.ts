@@ -1,7 +1,7 @@
 // # PLUGINS IMPORTS //
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { IConstants } from '@server/config'
+import { ConstantsTypes } from '@server/config'
 import { compare, hash } from 'bcrypt'
 
 // # EXTRA IMPORTS //
@@ -11,7 +11,7 @@ import { compare, hash } from 'bcrypt'
 @Injectable()
 export class PasswordService {
   get bcryptSaltRounds(): string | number {
-    const securityConfig = this.configService.get<IConstants.SecurityConfig>(
+    const securityConfig = this.configService.get<ConstantsTypes.SecurityConfig>(
       'security'
     )
     const saltOrRounds = securityConfig.bcryptSaltOrRound

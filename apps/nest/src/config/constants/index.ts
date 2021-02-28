@@ -1,6 +1,6 @@
-import * as IConstants from './config.types'
+import * as ConstantsTypes from './config.types'
 
-const mapping: IConstants.Interface = {
+const mapping: ConstantsTypes.Interface = {
   nest: {
     port: 3000,
   },
@@ -27,5 +27,5 @@ const mapping: IConstants.Interface = {
   },
 }
 
-export const Constants = (): IConstants.Interface => mapping
-export { IConstants }
+export const Constants = (): ConstantsTypes.Interface => mapping
+export { ConstantsTypes }

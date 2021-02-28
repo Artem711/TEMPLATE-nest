@@ -6,7 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 // # EXTRA IMPORTS //
 import { AppModule } from '@server/app.module'
-import { IConstants } from '@server/config/constants'
+import { ConstantsTypes } from '@server/config/constants'
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -17,9 +17,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
 
   const configService = app.get(ConfigService)
-  const nestConfig = configService.get<IConstants.NestConfig>('nest')
-  const corsConfig = configService.get<IConstants.CorsConfig>('cors')
-  const swaggerConfig = configService.get<IConstants.SwaggerConfig>('swagger')
+  const nestConfig = configService.get<ConstantsTypes.NestConfig>('nest')
+  const corsConfig = configService.get<ConstantsTypes.CorsConfig>('cors')
+  const swaggerConfig = configService.get<ConstantsTypes.SwaggerConfig>(
+    'swagger'
+  )
 
   // Swagger Api
   if (swaggerConfig.enabled) {
