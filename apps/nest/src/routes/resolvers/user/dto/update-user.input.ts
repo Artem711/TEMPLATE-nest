@@ -1,9 +1,9 @@
-import { InputType, Field } from '@nestjs/graphql'
+import { InputType, PickType } from '@nestjs/graphql'
+import { UserModel } from '@server/routes/models/user.model'
 
 @InputType()
-export class UpdateUserInput {
-  @Field(() => String, { nullable: true })
-  firstname?: string
-  @Field(() => String, { nullable: true })
-  lastname?: string
-}
+export class UpdateUserInput extends PickType(
+  UserModel,
+  ['firstName', 'lastName'] as const,
+  InputType
+) {}

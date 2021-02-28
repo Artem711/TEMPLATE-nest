@@ -39,9 +39,9 @@ export class UserResolver {
   @Mutation(() => UserModel)
   async updateUser(
     @UserEntity() user: UserModel,
-    @Args('newData', { type: () => UpdateUserInput }) newData: UpdateUserInput
+    @Args('data', { type: () => UpdateUserInput }) data: UpdateUserInput
   ): Promise<UserModel> {
-    return await this.userService.updateUser(user.id, newData)
+    return await this.userService.updateUser(user.id, data)
   }
 
   @UseGuards(GqlAuthGuard)
