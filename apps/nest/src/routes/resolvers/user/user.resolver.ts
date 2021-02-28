@@ -38,19 +38,19 @@ export class UserResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => UserModel)
   async updateUser(
-    @UserEntity() user: UserModel,
+    @UserEntity() { id }: UserModel,
     @Args('data', { type: () => UpdateUserInput }) data: UpdateUserInput
   ): Promise<UserModel> {
-    return await this.userService.updateUser(user.id, data)
+    return await this.userService.updateUser(id, data)
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => UserModel)
   async changeUserPassword(
-    @UserEntity() user: UserModel,
+    @UserEntity() { id, password }: UserModel,
     @Args('input') input: ChangePasswordInput
   ): Promise<UserModel> {
-    return this.userService.changeUserPassword(user.id, user.password, input)
+    return this.userService.changeUserPassword(id, password, input)
   }
 
   @ResolveField('posts', () => [PostModel])

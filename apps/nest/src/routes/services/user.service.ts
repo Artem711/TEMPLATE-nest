@@ -20,7 +20,11 @@ export class UserService {
   ) {}
 
   async getUser(id: string): Promise<UserModel> {
-    return await this.prisma.user.findUnique({ where: { id } })
+    try {
+      return await this.prisma.user.findUnique({ where: { id } })
+    } catch {
+      throw new UserInputError('dsa')
+    }
   }
 
   async changeUserPassword(

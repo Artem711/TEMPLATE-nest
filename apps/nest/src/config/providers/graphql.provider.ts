@@ -11,7 +11,7 @@ export const GraphQLProvider = GraphQLModule.forRootAsync({
         numberScalarMode: 'integer',
       },
       sortSchema: graphqlConfig.sortSchema,
-      autoSchemaFile: graphqlConfig.schemaDestination || './schema.graphql',
+      autoSchemaFile: graphqlConfig.schemaDestination || 'schema.graphql',
       debug: graphqlConfig.debug,
       playground: graphqlConfig.playgroundEnabled,
       context: ({ req }) => ({ req }),
